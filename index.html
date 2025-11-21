@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nothingness</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: none; 
+        }
+
+        .orb {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 80%);
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: 0.9;
+            transition: transform 2s ease, opacity 1s ease;
+        }
+
+        .fadeout {
+            animation: expand 1.5s ease forwards;
+        }
+
+        @keyframes expand {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(60); opacity: 0; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="orb" id="orb"></div>
+
+    <script>
+        const orb = document.getElementById("orb");
+
+        function driftOrb() {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+
+            orb.style.transition = "transform 6s ease-in-out";
+            orb.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        setInterval(driftOrb, 6000);
+        driftOrb();
+
+        orb.addEventListener("click", () => {
+            orb.classList.add("fadeout");
+
+            setTimeout(() => {
+                window.location.href = "creation.html";
+            }, 1500);
+        });
+    </script>
+
+</body>
+</html>
