@@ -15,20 +15,26 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: none; 
+            cursor: default; /* cursor visible now */
         }
 
+        /* The glowing orb */
         .orb {
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 50px; /* increased size */
+            height: 50px;
+            top: 50%; /* start center */
+            left: 50%;
+            transform: translate(-50%, -50%);
             background: radial-gradient(circle, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 80%);
             border-radius: 50%;
-            filter: blur(2px);
+            filter: blur(3px);
             opacity: 0.9;
-            transition: transform 2s ease, opacity 1s ease;
+            transition: transform 3s ease, opacity 1s ease;
+            cursor: pointer;
         }
 
+        /* Fade-out effect */
         .fadeout {
             animation: expand 1.5s ease forwards;
         }
@@ -47,17 +53,22 @@
     <script>
         const orb = document.getElementById("orb");
 
+        // Function for random drift within screen bounds
         function driftOrb() {
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
+            const x = Math.random() * (window.innerWidth - 50); // keep inside viewport
+            const y = Math.random() * (window.innerHeight - 50);
 
             orb.style.transition = "transform 6s ease-in-out";
             orb.style.transform = `translate(${x}px, ${y}px)`;
         }
 
+        // Start drifting slowly and continuously
         setInterval(driftOrb, 6000);
+
+        // Initial drift after page load
         driftOrb();
 
+        // Click → orb expands → redirects to creation.html
         orb.addEventListener("click", () => {
             orb.classList.add("fadeout");
 
